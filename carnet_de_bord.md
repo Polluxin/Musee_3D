@@ -20,3 +20,20 @@
     - Conclusion : Seule la partie 1 semble réalisable en environ 36 heures
 
 ### 14 Mars 2023
+#### 4 heures
+    - Objectif : Apprendre à utiliser Java script et les imports
+    - Appropriation des imports et de l'utilisation de loader pour charger les modèles 3D depuis Blender
+    - Conclusion : Je peux créer les salles en 3D sur Blender et les importer ensuite sur mon doc JS afin de les
+    animer
+    Plan potentiel :
+    Etape 1 :
+        1) Faire 1 salle en Blender
+        2) Pouvoir naviguer dans cette salleà l'aide de la souris
+        3) Faire une autre salle
+        4) Pouvoir naviguer entre les deux salles à la souris
+    Fin Etape 1
+    Etape 2 :
+        A définir
+    Fin Etape 2
+
+###

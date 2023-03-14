@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Juicy cube</title>
+    <style>
+        body { margin: 0; }
+    </style>
+</head>
+<body>
+<script type="importmap">
+	{
+	"imports": {
+		"three": "https://unpkg.com/three/build/three.module.js",
+		"three/addons/": "https://unpkg.com/three/examples/jsm/"
+	}
+	}
+</script>
+
+<script type="module">
+
+    import * as THREE from 'three';
+    import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+    const spotLight = new THREE.DirectionalLight(0xffff00, 0.5);
+    spotLight.position.set(10,10,10);
+    scene.add(spotLight);
+
+    const sunLight = new THREE.AmbientLight(0xffffff, 0.5);
+    sunLight.position.set(10,10,10);
+    scene.add(sunLight);
+
+    camera.position.set(0,2,10);
+
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    let model;
+    const loader = new GLTFLoader();
+    loader.load( 'cube.glb', function ( gltf ) {
+
+        model = gltf;
+        scene.add( gltf.scene );
+    }, undefined, function ( error ) {
+
+        console.error( error );
+    } );
+
+    function animate(){
+        requestAnimationFrame( animate );
+
+        if (model) {
+            model.scene.rotation.x += 0.01;
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+</script>
+</body>
+</html>
