@@ -36,4 +36,34 @@
         A définir
     Fin Etape 2
 
-###
+### 21 Mars 2023
+#### 2 heures
+    - Objectif : Faire une salle simple pour s'approprier three.js
+    - Finalement on n'utilisera pas Blender car les modèles sont simples
+    - Déplacer un objet dans la monde
+    - Placer de la lumière...
+    - Conclusion : cats_room.html
+
+### 22 Mars 2023
+#### 4 heures
+    - Objectif : Commencer une bibliothèque "museum.js" qui permet de créer
+    le musée, par des primitives comme createRoom()...
+    - createRoom() en cours, murs et présentoirs posés dynamiquement selon la seule
+    configuration possible pour le moment (Simple)
+    - Commentaire du code
+    - Conclusion : Pour le 26 Mars, on veut une fonction createRoom() opérationnelle
+    pour au moins la configuration simple. C'est à dire que l'on peut tester avec
+    des objets venant directement de la galerie (renseignés dans un tableau).
+    Plan pour le 26 :
+        1) Dans createRoom() : placer les images des objets en 2 dimensions sur 
+            les présentoirs
+        2) Inclure l'animation
+        3) Ajouter un tableau pour l'image du protagoniste de la salle
+        4) Ajouter des textures et travailler l'aspect esthétique (c'est super moche)
+        5) Ajouter le texte relatif aux objets
+
+    /* function :
+        Description here with pre-conditions and possibly edge effects
+            Input  : ...
+            Output : ...
+    */
