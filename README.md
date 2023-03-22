@@ -2,4 +2,5 @@
 Réalisation de vues 3D autour d'objets des salles du musée virtuel d'ACONIT.
 
 ## Structure
-Le git n'est pas encore correctement structuré. Le dossier /tests contient le travail en cours sur l'apprentissage de three.js
+Tout le développement en cours se situe dans le répertoire /tests.
+Dans /test/lib se situe la librairie responsable de la création des formes 3D du musée.
