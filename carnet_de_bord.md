@@ -69,6 +69,10 @@
     */
 
 ### 23 Mars 2023
-####
+#### 2 heures
     - Objectif : Continuer l'implémentation de createRoom()
     - Ajout des fonctions getSize et getObjectOnTop (placement des images sur les présentoirs
+    - Ajout de propriétés sur la configuration Simple
+    - Ajout de la page de visite (résultat final) utilisant la bibliothèque /lib/museum.js
+    - Restructuration
+    - Début d'insertion de l'animation
