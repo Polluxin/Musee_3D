@@ -137,14 +137,15 @@
   // Function that add image on top of object obj
   function addItem(obj, image){
     let measure = new THREE.Vector3();
-    let plane = new PlaneGeometry(1,1);
+    let plane = new PlaneGeometry(0.75,0.75);
     obj.geometry.computeBoundingBox();
     obj.geometry.boundingBox.getSize(measure);
 
     let i = new THREE.Mesh(plane, image);
     scene.add(i);
-
-    i.position.set(obj.position.x, obj.position.y + measure.y, obj.position.z);
+    console.log(obj.position);
+    i.position.set(obj.position.x, obj.position.y + measure.y/2 + 0.75/2, obj.position.z);
+    i.rotateY(Math.PI/2);
   }
 
   function addPresenters(){

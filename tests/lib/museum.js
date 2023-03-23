@@ -28,6 +28,7 @@ const ptexture = loader.load ('textures/wood.jpg');
 const presenterMaterial = new THREE.MeshPhongMaterial({ color: 0xE75900 } );
 presenterMaterial.map = ptexture;
 
+
 // Room configurations
 /* Configuration Simple :
     The room is a simple rectangle where presenters are disposed on two
@@ -69,18 +70,21 @@ let Simple = {
 }
 
 /* createRoom :
-    Create a room with nb_objects disposed on presenters following the given
+    Create a room with nb_objects disposed on presenters with images on them following the given
     configuration. The room is a group of geometry objects.
         Input  : - nb_objects the number of objets to include
+                 - images a tab of objects to place on presenters
                  - configuration the shape of the room
 
         Output : - the group containing all elements in the room
 */
-function createRoom(nb_objects, configuration){
+function createRoom(nb_objects, images, configuration){
     const room = new THREE.Group();
 
+    // Build walls and roof
     room.add(buildWallsSimple(nb_objects, 1));
-    room.add(buildPresenters(nb_objects, configuration));
+    // Build presenters and dispose them
+    room.add(buildPresenters(nb_objects, images, configuration));
 
     return room;
 }
@@ -145,16 +149,58 @@ function buildWallsSimple(n, door){
 
         Output : - the group containing all presenters
 */
-function buildPresenters(n, configuration){
+function buildPresenters(n, images, configuration){
     const presenters = new THREE.Group();
     configuration.computePresentersPosition(n);
     for (let i = 0; i < n; i++) {
         let geometry = new THREE.BoxGeometry(1, 1, 1);
         let mesh = new THREE.Mesh(geometry, presenterMaterial);
         mesh.position.set(Simple.presentersPositions[i].x, Simple.presentersPositions[i].y, Simple.presentersPositions[i].z);
+        presenters.add(getAnObjectOnTop(mesh, images, 0.75, 0.75));
         presenters.add(mesh);
     }
     return presenters;
+}
+
+/* getSize :
+    Give the dimensions of the object given using BoundingBox.
+        Input  : - obj the object to measure
+
+        Output : - the measure by a Vector3
+ */
+function getSize(obj) {
+    let measure = new THREE.Vector3();
+    obj.geometry.computeBoundingBox();
+    obj.geometry.boundingBox.getSize(measure);
+    return measure;
+}
+
+/* getAnObjectOnTop :
+    Give an object of texture image, sized w and h, placed on top of
+    given presenter. The object is a simple plane.
+        Input  : - presenter the presenter
+                 - image the image of object to add
+                 - w the width of object
+                 - h the height of object
+        Output : - the object in 2 dimensions placed on top of presenter
+ */
+function getAnObjectOnTop(presenter, image, w, h){
+    let measure = new THREE.Vector3();
+    let plane = new THREE.PlaneGeometry(w, h);
+    presenter.geometry.computeBoundingBox();
+    presenter.geometry.boundingBox.getSize(measure);
+
+    const im = new THREE.MeshLambertMaterial({
+        map: loader.load(image),
+        side: THREE.DoubleSide
+    });
+
+    let i = new THREE.Mesh(plane, im);
+
+    i.position.set(presenter.position.x, presenter.position.y, presenter.position.z+ measure.z/2 + h/2);
+    i.rotateX(Math.PI/2);
+    i.rotateY(Math.PI/2);
+    return i;
 }
 
 /* main :
@@ -177,9 +223,9 @@ function main(){
     sunLight.position.set(10,10,10);
     scene.add(sunLight);
 
-    const n = 12;
+    const n = 4;
 
-    scene.add(createRoom( n, Simple));
+    scene.add(createRoom( n, "../../data/139.jpg", Simple));
 
     const axesHelper = new THREE.AxesHelper( 30 );
     scene.add( axesHelper );

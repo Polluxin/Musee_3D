@@ -67,3 +67,8 @@
             Input  : ...
             Output : ...
     */
+
+### 23 Mars 2023
+####
+    - Objectif : Continuer l'implémentation de createRoom()
+    - Ajout des fonctions getSize et getObjectOnTop (placement des images sur les présentoirs
