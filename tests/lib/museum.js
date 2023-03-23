@@ -5,17 +5,28 @@
  **********************************************************************************/
 
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 
 
 /**********************************************************************************
      Public functions
  **********************************************************************************/
 
-
-// Wall informations
+const loader = new THREE.TextureLoader();
+// Wall information
 const cap = 5
-const wallMaterial = new THREE.MeshPhongMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+const wtexture = loader.load("textures/granite.jpg")
+const wallMaterial = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+wallMaterial.map = wtexture;
+
+const rtexture = loader.load("textures/marble.jpg")
+const roofMaterial = new THREE.MeshPhongMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+roofMaterial.map = rtexture;
+
+// Presenters information
+const ptexture = loader.load ('textures/wood.jpg');
+const presenterMaterial = new THREE.MeshPhongMaterial({ color: 0xE75900 } );
+presenterMaterial.map = ptexture;
 
 // Room configurations
 /* Configuration Simple :
@@ -95,7 +106,7 @@ function buildWallsSimple(n, door){
 
 
     const roof = new THREE.PlaneGeometry(w, h);
-    walls.add(new THREE.Mesh( roof, wallMaterial ));
+    walls.add(new THREE.Mesh( roof, roofMaterial ));
 
     // const top = new THREE.PlaneGeometry(w, h);
     // const mesh = new THREE.Mesh( top, wallMaterial );
@@ -139,8 +150,7 @@ function buildPresenters(n, configuration){
     configuration.computePresentersPosition(n);
     for (let i = 0; i < n; i++) {
         let geometry = new THREE.BoxGeometry(1, 1, 1);
-        let material = new THREE.MeshPhongMaterial({color: 0xE75900});
-        let mesh = new THREE.Mesh(geometry, material);
+        let mesh = new THREE.Mesh(geometry, presenterMaterial);
         mesh.position.set(Simple.presentersPositions[i].x, Simple.presentersPositions[i].y, Simple.presentersPositions[i].z);
         presenters.add(mesh);
     }
