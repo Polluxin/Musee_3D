@@ -33,21 +33,26 @@ presenterMaterial.map = ptexture;
 /* Configuration Simple :
     The room is a simple rectangle where presenters are disposed on two
     parallels lines :
-                +---------+
-                |         |
-                |  o   o  |
-                |         |    o -> a presenter
-                |  o   o  |
-                |         |
-                +---------+
+               ^ +---------+
+               | |         |
+               | |  o   o  |
+      height   | |         |    o -> a presenter
+               | |  o   o  |
+               | |         |
+               ^ +---------+
+                 <---------<
+                    width
  */
 let Simple = {
-    space : 2,
+    spaceH : 2,                                     // Distance between 2 presenters in height space
+    spaceW : 3,                                     // Distance between the 2 lines of presenters
+    spaceSidesH : 2,                                // Distance between a wall and a presenter in height space
+    spaceSidesW  : 2,                                // Distance between a wall and a presenter in width space
     getHeight : function(n) {
-        return ((n/2 - 1)*this.space + 4)
+        return ((n/2 - 1)*this.spaceH + 2 * this.spaceSidesH);
     },
     getWidth : function(n) {
-        return 9
+        return this.spaceW + 2 + this.spaceSidesW*2; // spaceW + width of 2 presenters + 2*spaceSides
     },
     // Tab of presenters positions
     presentersPositions : [],
@@ -56,14 +61,14 @@ let Simple = {
         let pos = deb;
         let i = 0;
         while (i < n/2){
-            this.presentersPositions.push(new THREE.Vector3(-1.5,pos,0.5));
-            pos += this.space;
+            this.presentersPositions.push(new THREE.Vector3(-this.spaceW,pos,0.5));
+            pos += this.spaceH;
             i += 1;
         }
         pos = deb;
         while (i < n){
-            this.presentersPositions.push(new THREE.Vector3(1.5,pos,0.5));
-            pos += this.space;
+            this.presentersPositions.push(new THREE.Vector3(this.spaceW,pos,0.5));
+            pos += this.spaceH;
             i += 1;
         }
     }
@@ -80,6 +85,11 @@ let Simple = {
 */
 function createRoom(nb_objects, images, configuration){
     const room = new THREE.Group();
+
+    if (images.length !=  nb_objects) {
+        console.error("createRoom : not enough images to add, here only "+ images.length + " for "+ nb_objects+" presenters");
+        return null;
+    }
 
     // Build walls and roof
     room.add(buildWallsSimple(nb_objects, 1));
@@ -156,7 +166,7 @@ function buildPresenters(n, images, configuration){
         let geometry = new THREE.BoxGeometry(1, 1, 1);
         let mesh = new THREE.Mesh(geometry, presenterMaterial);
         mesh.position.set(Simple.presentersPositions[i].x, Simple.presentersPositions[i].y, Simple.presentersPositions[i].z);
-        presenters.add(getAnObjectOnTop(mesh, images, 0.75, 0.75));
+        presenters.add(getAnObjectOnTop(mesh, images[i], 0.75, 0.75));
         presenters.add(mesh);
     }
     return presenters;
@@ -225,7 +235,9 @@ function main(){
 
     const n = 4;
 
-    scene.add(createRoom( n, "../../data/139.jpg", Simple));
+    const images = [ "../../data/139.jpg", "../../data/979.jpg", "../../data/1034.jpg", "../../data/2245.jpg" ];
+
+    scene.add(createRoom( n, images, Simple));
 
     const axesHelper = new THREE.AxesHelper( 30 );
     scene.add( axesHelper );
