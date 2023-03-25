@@ -76,3 +76,10 @@
     - Ajout de la page de visite (résultat final) utilisant la bibliothèque /lib/museum.js
     - Restructuration
     - Début d'insertion de l'animation
+
+### 24 Mars 2023
+#### 3 heures
+    - Objectif : Mettre en place l'animation et le déplacement dans la scène
+    - D'après le code https://github.com/mrdoob/three.js/blob/master/examples/games_fps.html
+    - Conclusion : animation et collisions OK
+    - A faire : lumière et textures
