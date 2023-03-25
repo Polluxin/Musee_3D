@@ -65,6 +65,22 @@ document.body.addEventListener('mousemove', (event) => {
     }
 });
 
+window.addEventListener('resize', onWindowResize);
+
+onWindowResize()
+
+function onWindowResize()
+{
+    const margin = 0.02
+    const width = window.innerWidth * (1-margin)
+    const height = window.innerHeight * (1-margin)
+
+    renderer.setSize(width, height)
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+}
+
 function processPlayerControls(deltaTime)
 {
     const speedDelta = deltaTime * SPEED;
