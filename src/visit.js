@@ -17,14 +17,18 @@ camera.lookAt(0,10,0);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild( renderer.domElement );
 
-const spotLight = new THREE.DirectionalLight(0xffffff, 0.5);
-spotLight.position.set(4,10,5);
-scene.add(spotLight);
+const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x888888, 0.8);
+ambientLight.position.set(1,1,1);
+scene.add(ambientLight);
 
-const sunLight = new THREE.AmbientLight(0xffffff, 0.5);
-sunLight.position.set(10,10,10);
+const sunLight = new THREE.DirectionalLight(0xffffff, 0.3);
+sunLight.position.set(0, 0, 25);
+sunLight.castShadow = true;
+
 scene.add(sunLight);
 
 /**********************************************************************************
