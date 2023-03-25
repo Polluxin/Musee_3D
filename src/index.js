@@ -204,7 +204,7 @@ function processPlayerControls(deltaTime)
 }
 
 // const loader = new GLTFLoader().setPath( './' );
-const loader = new FBXLoader().setPath('./data/');
+const loader = new FBXLoader().setPath('../data/');
 
 loader.load('museum.fbx', (object) => {
   scene.add(object);
