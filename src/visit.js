@@ -2,6 +2,7 @@ import * as MUSEUM from "../lib/museum.js";
 import * as THREE from "three";
 import {Capsule} from 'three/addons/math/Capsule.js';
 import {Octree} from 'three/addons/math/Octree.js';
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 
 
 /**********************************************************************************
@@ -55,19 +56,29 @@ let playerOnFloor = false;
 
 const keyStates = {};
 
-document.addEventListener('keydown', (event) => { keyStates[event.code] = true; });
+const debug = true;
 
-document.addEventListener('keyup', (event) => { keyStates[event.code] = false; });
+if (!debug)
+{
+    document.addEventListener('keydown', (event) => {
+        keyStates[event.code] = true;
+    });
 
-document.addEventListener('mousedown', () => { document.body.requestPointerLock(); });
+    document.addEventListener('keyup', (event) => {
+        keyStates[event.code] = false;
+    });
 
-document.body.addEventListener('mousemove', (event) => {
-    if(document.pointerLockElement === document.body)
-    {
-        camera.rotation.x -= event.movementY / 500;
-        camera.rotation.z -= event.movementX / 500;
-    }
-});
+    document.addEventListener('mousedown', () => {
+        document.body.requestPointerLock();
+    });
+
+    document.body.addEventListener('mousemove', (event) => {
+        if (document.pointerLockElement === document.body) {
+            camera.rotation.x -= event.movementY / 500;
+            camera.rotation.z -= event.movementX / 500;
+        }
+    });
+}
 
 window.addEventListener('resize', onWindowResize);
 
@@ -191,10 +202,16 @@ function animate() {
 
     const deltaTime = Math.min(0.05, clock.getDelta()) / STEPS_PER_FRAME;
 
-    for(let i = 0; i < STEPS_PER_FRAME; i++)
+    if (!debug)
     {
-        processPlayerControls(deltaTime);
-        movePlayer(deltaTime);
+        for (let i = 0; i < STEPS_PER_FRAME; i++) {
+            processPlayerControls(deltaTime);
+            movePlayer(deltaTime);
+        }
+    }
+
+    if (debug) {
+        controls.update();
     }
 
     renderer.render( scene, camera );
@@ -206,7 +223,15 @@ function animate() {
  * Museum installation
  **********************************************************************************/
 
+let controls;
+
+if (debug){
+    camera.position.set(0,-20,10);
+    controls = new OrbitControls( camera, renderer.domElement );
+
 // Number of objets to expose
+
+}
 const n = 7;
 
 // Images of exposed objects
