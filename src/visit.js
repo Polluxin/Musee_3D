@@ -56,7 +56,7 @@ let playerOnFloor = false;
 
 const keyStates = {};
 
-const debug = true;
+const debug = false;
 
 if (!debug)
 {
@@ -226,7 +226,7 @@ function animate() {
 let controls;
 
 if (debug){
-    camera.position.set(0,-20,10);
+    camera.position.set(4,0,6);
     controls = new OrbitControls( camera, renderer.domElement );
 
 // Number of objets to expose
@@ -234,15 +234,21 @@ if (debug){
 }
 const n = 7;
 
+// Image of protagonist
+const protagonist = "/data/rooms/wozniak/wozniak.jpg";
+
 // Images of exposed objects
 const images = [ "/data/rooms/wozniak/139.jpg", "/data/rooms/wozniak/979.jpg", "/data/rooms/wozniak/1034.jpg", "/data/rooms/wozniak/2245.jpg",
                  "/data/rooms/wozniak/2247.jpg", "/data/rooms/wozniak/2250.jpg", "/data/rooms/wozniak/2308.jpg" ];
 
 // Creation of a room
-let room = MUSEUM.createRoom( n, images, MUSEUM.Simple);
+let room = MUSEUM.createRoom( n, images, protagonist, MUSEUM.Simple);
 
 // Collisions
 worldOctree.fromGraphNode(room);
+
+const axesHelper = new THREE.AxesHelper( 15 );
+scene.add( axesHelper );
 
 scene.add(room);
 
