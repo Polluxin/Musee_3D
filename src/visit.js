@@ -226,6 +226,8 @@ function animate() {
 let controls;
 
 if (debug){
+    const axesHelper = new THREE.AxesHelper( 15 );
+    scene.add( axesHelper );
     camera.position.set(4,0,6);
     controls = new OrbitControls( camera, renderer.domElement );
 
@@ -246,9 +248,6 @@ let room = MUSEUM.createRoom( n, images, protagonist, MUSEUM.Simple);
 
 // Collisions
 worldOctree.fromGraphNode(room);
-
-const axesHelper = new THREE.AxesHelper( 15 );
-scene.add( axesHelper );
 
 scene.add(room);
 
