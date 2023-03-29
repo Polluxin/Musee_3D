@@ -58,28 +58,6 @@ const keyStates = {};
 
 const debug = false;
 
-if (!debug)
-{
-    document.addEventListener('keydown', (event) => {
-        keyStates[event.code] = true;
-    });
-
-    document.addEventListener('keyup', (event) => {
-        keyStates[event.code] = false;
-    });
-
-    document.addEventListener('mousedown', () => {
-        document.body.requestPointerLock();
-    });
-
-    document.body.addEventListener('mousemove', (event) => {
-        if (document.pointerLockElement === document.body) {
-            camera.rotation.x -= event.movementY / 500;
-            camera.rotation.z -= event.movementX / 500;
-        }
-    });
-}
-
 window.addEventListener('resize', onWindowResize);
 
 onWindowResize()
@@ -252,3 +230,36 @@ worldOctree.fromGraphNode(room);
 scene.add(room);
 
 animate();
+
+var modal = document.querySelector(".modal");
+var closeButton = document.querySelector(".close-button");
+
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
+
+function addListeners(){
+    toggleModal();
+    document.addEventListener('keydown', (event) => {
+        keyStates[event.code] = true;
+    });
+
+    document.addEventListener('keyup', (event) => {
+        keyStates[event.code] = false;
+    });
+
+    document.addEventListener('mousedown', () => {
+    document.body.requestPointerLock();
+    });
+
+    document.body.addEventListener('mousemove', (event) => {
+        if (document.pointerLockElement === document.body) {
+            camera.rotation.x -= event.movementY / 500;
+            camera.rotation.z -= event.movementX / 500;
+        }
+    });
+}
+
+closeButton.addEventListener("click", addListeners);
+
+toggleModal();
