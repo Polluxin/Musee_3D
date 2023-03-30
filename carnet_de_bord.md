@@ -83,3 +83,9 @@
     - D'après le code https://github.com/mrdoob/three.js/blob/master/examples/games_fps.html
     - Conclusion : animation et collisions OK
     - A faire : lumière et textures
+
+### 30 Mars 2023
+#### 4 heures
+    - Objectif : Mettre en place les textes et descriptions des objets
+    - Utiliser du html+css pour afficher des modals.
+    - Peut-être ajouter du texte sur la scène 3D pour les noms des objets/personnes ?

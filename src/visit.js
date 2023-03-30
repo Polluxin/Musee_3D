@@ -20,6 +20,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild( renderer.domElement );
 
 const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x888888, 0.8);

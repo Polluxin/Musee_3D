@@ -39,3 +39,18 @@
     transform: scale(1);
     transition: visibility 0s, linear 0s, opacity 1s, transform 0.25s;
 }
+
+#info {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    z-index: 1;
+}
