@@ -24,14 +24,31 @@ renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild( renderer.domElement );
 
 const ambientLight = new THREE.HemisphereLight(0xcccccc, 0x888888, 0.8);
-ambientLight.position.set(1,1,1);
+ambientLight.position.set(2, 1, 1);
 scene.add(ambientLight);
 
 const sunLight = new THREE.DirectionalLight(0xffffff, 0.3);
-sunLight.position.set(0, 0, 25);
+sunLight.position.set(-5, 25, -1);
 sunLight.castShadow = true;
-
+sunLight.shadow.camera.near = 0.01;
+sunLight.shadow.camera.far = 500;
+sunLight.shadow.camera.right = 30;
+sunLight.shadow.camera.left = -30;
+sunLight.shadow.camera.top = 30;
+sunLight.shadow.camera.bottom = -30;
+sunLight.shadow.mapSize.width = 1024;
+sunLight.shadow.mapSize.height = 1024;
+sunLight.shadow.radius = 4;
+sunLight.shadow.bias = -0.00006;
 scene.add(sunLight);
+
+// const ambientLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 1);
+// scene.add(ambientLight);
+
+// const sunLight = new THREE.DirectionalLight(0xffffff, 0.3);
+// sunLight.position.set(0, 0, 25);
+// sunLight.castShadow = true;
+// scene.add(sunLight);
 
 /**********************************************************************************
  * Animation code taken from
@@ -56,8 +73,6 @@ const playerDirection = new THREE.Vector3();
 let playerOnFloor = false;
 
 const keyStates = {};
-
-const debug = false;
 
 window.addEventListener('resize', onWindowResize);
 
@@ -204,15 +219,16 @@ function animate() {
 
 let controls;
 
+const debug = true;
+
 if (debug){
     const axesHelper = new THREE.AxesHelper( 15 );
     scene.add( axesHelper );
     camera.position.set(4,0,6);
     controls = new OrbitControls( camera, renderer.domElement );
+}
 
 // Number of objets to expose
-
-}
 const n = 7;
 
 // Image of protagonist
@@ -241,6 +257,10 @@ function toggleModal() {
 
 function addListeners(){
     toggleModal();
+
+    if (debug)
+        return;
+
     document.addEventListener('keydown', (event) => {
         keyStates[event.code] = true;
     });
