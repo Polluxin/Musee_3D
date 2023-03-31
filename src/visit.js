@@ -219,7 +219,7 @@ function animate() {
 
 let controls;
 
-const debug = true;
+const debug = false;
 
 if (debug){
     const axesHelper = new THREE.AxesHelper( 15 );
