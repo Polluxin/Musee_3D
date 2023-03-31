@@ -11,24 +11,26 @@
     transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }
 .modal-content {
-    font-family: Candara;
+    font-family: 'Exo 2', sans-serif;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #383634;
+    background-color: antiquewhite;
     padding: 1rem 1.5rem;
     width: 24rem;
+    border: solid;
     border-radius: 0.5rem;
 }
 .close-button {
     float: right;
-    width: 1rem;
-    line-height: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
     text-align: center;
     cursor: pointer;
-    border-radius: 30px;
-    background-color: #eeeeee;
+    border: 2px solid;
+    border-radius: 50%;
+    background-color: lightgrey;
 }
 .close-button:hover {
     background-color: #adadad;
@@ -41,16 +43,14 @@
 }
 
 #info {
+    font-family: 'Exo 2', sans-serif;
+    border: 1px dotted;
     position: absolute;
-    top: 0px;
-    width: 100%;
+    top: 15px;
+    width: 30%;
+    left: 15px;
     padding: 10px;
     box-sizing: border-box;
     text-align: center;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    pointer-events: none;
-    z-index: 1;
+    background-color: antiquewhite;
 }
