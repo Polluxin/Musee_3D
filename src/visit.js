@@ -209,7 +209,6 @@ function animate() {
     }
 
     renderer.render( scene, camera );
-
     requestAnimationFrame( animate );
 }
 
@@ -279,8 +278,35 @@ function addListeners(){
             camera.rotation.z -= event.movementX / 500;
         }
     });
+
+    document.body.addEventListener('click', (event) => {
+        if (document.pointerLockElement === document.body) {
+            var position = new THREE.Vector2();
+            // NDC (Normalized device coordinates).
+            var domRect = renderer.domElement.getBoundingClientRect();
+            position.x = ((event.clientX - domRect.left) / domRect.width) * 2 - 1;
+            position.y = - ((event.clientY - domRect.top) / domRect.height) * 2 + 1;
+            var s = getNearest(position);
+            if (s) {
+                console.log("Click on " + s.name);
+            }
+        }
+    });
 }
 
 closeButton.addEventListener("click", addListeners);
+
+var raycaster = new THREE.Raycaster();
+
+function getNearest(position) {
+    // Mise à jour de la position du rayon à lancer.
+    raycaster.setFromCamera(position, camera);
+    // Obtenir la liste des intersections
+    var selected = raycaster.intersectObjects(room.getObjectByName("objects").children);
+    if (selected.length) {
+        return selected[0].object;
+    }
+}
+
 
 toggleModal();
