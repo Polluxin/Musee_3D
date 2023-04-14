@@ -4,9 +4,6 @@ import {Capsule} from 'three/addons/math/Capsule.js';
 import {Octree} from 'three/addons/math/Octree.js';
 import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 import {Simple} from "../lib/museum.js";
-import {OctreeHelper} from "three/addons/helpers/OctreeHelper";
-import {GUI} from "three/addons/libs/lil-gui.module.min";
-import Stats from "three/addons/libs/stats.module";
 
 
 /**********************************************************************************
@@ -244,13 +241,13 @@ const images = [ "/data/rooms/wozniak/139.jpg", "/data/rooms/wozniak/979.jpg", "
 let room = MUSEUM.createRoom( n, images, protagonist, MUSEUM.Simple, 1, 1);
 scene.add(room);
 
-// let transitionRoom = MUSEUM.createTransitionRoom(Simple.getWidth(n), Simple.getHeight(n)/2, 0, 1, 1, 1);
-// transitionRoom.position.add(new THREE.Vector3(0,Simple.getHeight(n)*3/4, 0));
-// scene.add(transitionRoom);
+let transitionRoom = MUSEUM.createTransitionRoom(Simple.getWidth(n), Simple.getHeight(n)/2, 0, 0, 1, 0);
+transitionRoom.position.add(new THREE.Vector3(0,Simple.getHeight(n)*3/4, 0));
+scene.add(transitionRoom);
 
-// let transitionRoom2 = MUSEUM.createTransitionRoom(Simple.getWidth(n), Simple.getHeight(n)/2);
-// transitionRoom2.position.add(new THREE.Vector3(0,-Simple.getHeight(n)*3/4, 0));
-// scene.add(transitionRoom2);
+let transitionRoom2 = MUSEUM.createTransitionRoom(Simple.getWidth(n), Simple.getHeight(n)/2, 0, 0, 0, 1);
+transitionRoom2.position.add(new THREE.Vector3(0,-Simple.getHeight(n)*3/4, 0));
+scene.add(transitionRoom2);
 
 // Collisions
 worldOctree.fromGraphNode(scene);
