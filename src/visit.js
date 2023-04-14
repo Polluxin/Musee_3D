@@ -218,7 +218,7 @@ function animate() {
 
 let controls;
 
-const debug = true;
+const debug = false;
 
 if (debug){
     const axesHelper = new THREE.AxesHelper( 15 );
@@ -238,7 +238,7 @@ const images = [ "/data/rooms/wozniak/139.jpg", "/data/rooms/wozniak/979.jpg", "
                  "/data/rooms/wozniak/2247.jpg", "/data/rooms/wozniak/2250.jpg", "/data/rooms/wozniak/2308.jpg" ];
 
 // Creation of a room
-let room = MUSEUM.createRoom( n, images, protagonist, MUSEUM.Simple);
+let room = MUSEUM.createRoom( n, images, protagonist, MUSEUM.Simple, 1, 1);
 
 // Collisions
 worldOctree.fromGraphNode(room);

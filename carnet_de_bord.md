@@ -88,4 +88,9 @@
 #### 4 heures
     - Objectif : Mettre en place les textes et descriptions des objets
     - Utiliser du html+css pour afficher des modals.
-    - Peut-être ajouter du texte sur la scène 3D pour les noms des objets/personnes ?
+    - Peut-être ajouter du texte sur la scène 3D pour les noms des objets/personnes ? Non.
+
+### 14 avril 2023
+#### 5 heures
+    - Objectif 1 : Ajouter des portes et ajouter la possibilité d'avancer avec la molette de la souris
+    - Objectif 2 : Finir l'implémentation des modals
