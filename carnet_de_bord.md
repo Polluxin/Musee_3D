@@ -94,3 +94,7 @@
 #### 5 heures
     - Objectif 1 : Ajouter des portes et ajouter la possibilité d'avancer avec la molette de la souris
     - Objectif 2 : Finir l'implémentation des modals
+    - Ajout de portes sur les côtés des salles
+    - Ajout d'une fonction construisant une salle dîte de "transition"
+    - Ecriture de la doc
+    - TODO : Modals
