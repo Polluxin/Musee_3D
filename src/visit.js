@@ -218,7 +218,7 @@ function animate() {
 
 let controls;
 
-const debug = false;
+const debug = true;
 
 if (debug){
     const axesHelper = new THREE.AxesHelper( 15 );
@@ -309,4 +309,4 @@ function getNearest(position) {
 }
 
 
-toggleModal();
+if (!debug) toggleModal();
