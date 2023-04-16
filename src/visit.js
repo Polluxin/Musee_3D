@@ -294,7 +294,7 @@ var closeButton = document.querySelector(".close-button");
 
 function displayDescription(name){
     document.getElementById("title").innerHTML = name;
-    document.getElementById("description").innerHTML = "";
+    // document.getElementById("description").innerHTML = description_to_add;
     document.querySelector(".modal").classList.add('modal2');
     toggleModal();
 }
