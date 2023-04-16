@@ -294,7 +294,7 @@ var closeButton = document.querySelector(".close-button");
 
 function displayDescription(name){
     document.getElementById("title").innerHTML = name;
-    // document.getElementById("description").innerHTML = description_to_add;
+    document.getElementById("description").innerHTML = "";
     document.querySelector(".modal").classList.add('modal2');
     toggleModal();
 }
@@ -328,8 +328,8 @@ function getNearest(position) {
  * Museum installation
  **********************************************************************************/
 
+// Debug mod is used to see global geometry
 let controls;
-
 const debug = false;
 
 if (debug){
@@ -338,6 +338,9 @@ if (debug){
     camera.position.set(4,0,6);
     controls = new OrbitControls( camera, renderer.domElement );
 }
+
+// Room name
+const roomName = "Salle Steve Wozniak";
 
 // Number of objets to expose
 const n = 7;
@@ -372,14 +375,16 @@ for (let i=0; i<images.length; i++){
     objects[i] = [images[i], descriptions[i]];
 }
 
-// Creation of a room
+// Creation of Steve Wozniak Room
+document.getElementById("info").innerHTML = roomName;
 let room = MUSEUM.createRoom( n, objects, protagonist, MUSEUM.Simple, 1, 1);
 scene.add(room);
 
+
+// Add 2 more rooms
 let transitionRoom = MUSEUM.createTransitionRoom(Simple.getWidth(n), Simple.getHeight(n)/2, 0, 0, 1, 0);
 transitionRoom.position.add(new THREE.Vector3(0,Simple.getHeight(n)*3/4, 0));
 scene.add(transitionRoom);
-
 let transitionRoom2 = MUSEUM.createTransitionRoom(Simple.getWidth(n), Simple.getHeight(n)/2, 0, 0, 0, 1);
 transitionRoom2.position.add(new THREE.Vector3(0,-Simple.getHeight(n)*3/4, 0));
 scene.add(transitionRoom2);
@@ -387,6 +392,7 @@ scene.add(transitionRoom2);
 // Collisions
 worldOctree.fromGraphNode(scene);
 
-animate();
 
+// Initialisation
+animate();
 if (!debug) toggleModal();

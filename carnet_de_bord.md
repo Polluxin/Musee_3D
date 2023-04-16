@@ -98,3 +98,10 @@
     - Ajout d'une fonction construisant une salle dîte de "transition"
     - Ecriture de la doc
     - TODO : Modals
+
+### 16 avril 2023
+#### 4 heures
+    - Objectif : Finir les modals
+    - Une pop up s'affiche lorsque l'on clique sur les objets exposés donnant leur nom
+    - Dans la galerie, les objets sont regroupés, il faudrait afficher la description de ce regroupement
+    - Il manque aussi la description du protagoniste, et de la salle
