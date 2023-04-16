@@ -95,22 +95,22 @@ function processPlayerControls(deltaTime)
 {
     const speedDelta = deltaTime * SPEED;
 
-    if(keyStates['KeyW'])
+    if(keyStates['Keyw'] || keyStates['ArrowUp'])
     {
         playerVelocity.add(getForwardVector().multiplyScalar(speedDelta));
     }
 
-    if(keyStates['KeyS'])
+    if(keyStates['KeyS'] || keyStates['ArrowDown'])
     {
         playerVelocity.add(getForwardVector().multiplyScalar(-speedDelta));
     }
 
-    if(keyStates['KeyA'])
+    if(keyStates['KeyA'] || keyStates['ArrowLeft'])
     {
         playerVelocity.add(getSideVector().multiplyScalar(-speedDelta));
     }
 
-    if(keyStates['KeyD'])
+    if(keyStates['KeyD'] || keyStates['ArrowRight'])
     {
         playerVelocity.add(getSideVector().multiplyScalar(speedDelta));
     }
