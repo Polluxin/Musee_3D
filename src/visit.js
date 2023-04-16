@@ -5,6 +5,18 @@ import {Octree} from 'three/addons/math/Octree.js';
 import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 import {Simple} from "../lib/museum.js";
 
+/**********************************************************************************
+ * Javascript code used with an html file named visit.html and using the local
+ * library museum.js.
+ * For now, the visit is only a simple room filled with 7 objects linked to
+ * Steve Wozniak, taken from
+ * https://db.aconit.org/dbgalerie/galerie.php?fgal=galerie0&nsal=710
+ *
+ * This code generates dynamically a 3D-room displaying objects in a configuration
+ * named "Simple" and defined in museum.js.
+ *
+ * Geoffrey DAVID M1 Informatique IM2AG - 2023
+ **********************************************************************************/
 
 /**********************************************************************************
  * Scene, camera and light
@@ -42,14 +54,6 @@ sunLight.shadow.mapSize.height = 1024;
 sunLight.shadow.radius = 4;
 sunLight.shadow.bias = -0.00006;
 scene.add(sunLight);
-
-// const ambientLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 1);
-// scene.add(ambientLight);
-
-// const sunLight = new THREE.DirectionalLight(0xffffff, 0.3);
-// sunLight.position.set(0, 0, 25);
-// sunLight.castShadow = true;
-// scene.add(sunLight);
 
 /**********************************************************************************
  * Animation code taken from
@@ -213,7 +217,8 @@ function animate() {
 }
 
 /**********************************************************************************
- * Listeners
+ * Listeners :
+ *  Used to consider user inputs.
  **********************************************************************************/
 
 // Handlers
@@ -285,7 +290,8 @@ function addListeners(){
 }
 
 /**********************************************************************************
- * Pop-ups
+ * Pop-ups :
+ *  Used to display the names of objects using the html file.
  **********************************************************************************/
 
 const DIST_TO_POPUP = 2.5;
@@ -325,7 +331,9 @@ function getNearest(position) {
 
 
 /**********************************************************************************
- * Museum installation
+ * Museum installation :
+ *  Use museum.js to generate a room depending on objects to expose, protagonist
+ *  and a room configuration.
  **********************************************************************************/
 
 // Debug mod is used to see global geometry
