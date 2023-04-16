@@ -95,7 +95,7 @@ function processPlayerControls(deltaTime)
 {
     const speedDelta = deltaTime * SPEED;
 
-    if(keyStates['Keyw'] || keyStates['ArrowUp'])
+    if(keyStates['KeyW'] || keyStates['ArrowUp'])
     {
         playerVelocity.add(getForwardVector().multiplyScalar(speedDelta));
     }
@@ -213,6 +213,118 @@ function animate() {
 }
 
 /**********************************************************************************
+ * Listeners
+ **********************************************************************************/
+
+// Handlers
+function pressHandler(event){
+    keyStates[event.code] = true;
+}
+
+function releaseHandler(event){
+    keyStates[event.code] = false;
+}
+
+function mouseLockHandler(){
+    document.body.requestPointerLock();
+}
+
+function mouseHandler(event){
+    if (document.pointerLockElement === document.body) {
+        camera.rotation.x -= event.movementY / 500;
+        camera.rotation.z -= event.movementX / 500;
+    }
+}
+
+function clickHandler(event){
+    if (document.pointerLockElement === document.body) {
+        var position = new THREE.Vector2(0,0);
+        var s = getNearest(position);
+        if (s && s.position.distanceTo(camera.position) < DIST_TO_POPUP) {
+            displayDescription(s.name);
+        }
+    }
+}
+
+function setKeyStatesToFalse(){
+    let keys = Object.keys(keyStates);
+    for (let i=0; i<keys.length; i++){
+        keyStates[keys[i]] = false;
+    }
+}
+
+function removeListeners(){
+
+    setKeyStatesToFalse();
+
+    document.removeEventListener('keydown', pressHandler);
+
+    document.removeEventListener('keyup', releaseHandler);
+
+    document.removeEventListener('mousedown', mouseLockHandler);
+    document.exitPointerLock();
+
+    document.body.removeEventListener('mousemove', mouseHandler);
+
+    document.body.removeEventListener('click', clickHandler);
+}
+
+function addListeners(){
+
+    document.addEventListener('keydown', pressHandler);
+
+    document.addEventListener('keyup', releaseHandler);
+
+    document.addEventListener('mousedown', mouseLockHandler);
+
+    document.body.addEventListener('mousemove', mouseHandler);
+
+    setTimeout(() => {
+        document.body.addEventListener('click', clickHandler);
+    }, 1000);
+}
+
+/**********************************************************************************
+ * Pop-ups
+ **********************************************************************************/
+
+const DIST_TO_POPUP = 2.5;
+var modal = document.querySelector(".modal");
+var closeButton = document.querySelector(".close-button");
+
+function displayDescription(name){
+    document.getElementById("title").innerHTML = name;
+    document.getElementById("description").innerHTML = "";
+    document.querySelector(".modal").classList.add('modal2');
+    toggleModal();
+}
+
+function toggleModal() {
+    if (modal.classList.toggle("show-modal"))
+    {
+        removeListeners();
+    }
+    else {
+        addListeners();
+    }
+}
+
+closeButton.addEventListener("click", toggleModal);
+
+var raycaster = new THREE.Raycaster();
+
+function getNearest(position) {
+    // Mise à jour de la position du rayon à lancer.
+    raycaster.setFromCamera(position, camera);
+    // Obtenir la liste des intersections
+    var selected = raycaster.intersectObjects(room.getObjectByName("objects").children);
+    if (selected.length) {
+        return selected[0].object;
+    }
+}
+
+
+/**********************************************************************************
  * Museum installation
  **********************************************************************************/
 
@@ -234,11 +346,34 @@ const n = 7;
 const protagonist = "/data/rooms/wozniak/wozniak.jpg";
 
 // Images of exposed objects
-const images = [ "/data/rooms/wozniak/139.jpg", "/data/rooms/wozniak/979.jpg", "/data/rooms/wozniak/1034.jpg", "/data/rooms/wozniak/2245.jpg",
-                 "/data/rooms/wozniak/2247.jpg", "/data/rooms/wozniak/2250.jpg", "/data/rooms/wozniak/2308.jpg" ];
+const images = [ "/data/rooms/wozniak/obj1.jpg", "/data/rooms/wozniak/obj2.jpg", "/data/rooms/wozniak/obj3.jpg", "/data/rooms/wozniak/obj4.jpg",
+                 "/data/rooms/wozniak/obj5.jpg", "/data/rooms/wozniak/obj6.jpg", "/data/rooms/wozniak/obj7.jpg" ];
+
+// Objects description
+const descriptions  = [
+    "Apple Computer Inc. Micro-ordinateur Apple II\n" +
+    "Ensemble - 1979",
+    "Apple Computer Inc. Color High resolution RGB monitor\n" +
+    "Ecran - 1980",
+    "Apple Computer Inc. Micro-ordinateur Apple IIe\n" +
+    "Ensemble - 1983",
+    "Apple Computer Inc. Micro-ordinateur Apple IIc\n" +
+    "Ensemble - 1984",
+    "Apple Computer Inc. IIc\n" +
+    "Ecran - 1984",
+    "Apple Computer Inc. IIc\n" +
+    "Lecteur disquettes - 1984",
+    "Apple Computer Inc. : Installation de votre Apple IIc - 1975-2000"
+]
+
+// Objects to expose
+const objects = []
+for (let i=0; i<images.length; i++){
+    objects[i] = [images[i], descriptions[i]];
+}
 
 // Creation of a room
-let room = MUSEUM.createRoom( n, images, protagonist, MUSEUM.Simple, 1, 1);
+let room = MUSEUM.createRoom( n, objects, protagonist, MUSEUM.Simple, 1, 1);
 scene.add(room);
 
 let transitionRoom = MUSEUM.createTransitionRoom(Simple.getWidth(n), Simple.getHeight(n)/2, 0, 0, 1, 0);
@@ -253,67 +388,5 @@ scene.add(transitionRoom2);
 worldOctree.fromGraphNode(scene);
 
 animate();
-
-var modal = document.querySelector(".modal");
-var closeButton = document.querySelector(".close-button");
-
-function toggleModal() {
-    modal.classList.toggle("show-modal");
-}
-
-function addListeners(){
-    toggleModal();
-
-    if (debug)
-        return;
-
-    document.addEventListener('keydown', (event) => {
-        keyStates[event.code] = true;
-    });
-
-    document.addEventListener('keyup', (event) => {
-        keyStates[event.code] = false;
-    });
-
-    document.addEventListener('mousedown', () => {
-    document.body.requestPointerLock();
-    });
-
-    document.body.addEventListener('mousemove', (event) => {
-        if (document.pointerLockElement === document.body) {
-            camera.rotation.x -= event.movementY / 500;
-            camera.rotation.z -= event.movementX / 500;
-        }
-    });
-
-    document.body.addEventListener('click', (event) => {
-        if (document.pointerLockElement === document.body) {
-            var position = new THREE.Vector2();
-            // NDC (Normalized device coordinates).
-            var domRect = renderer.domElement.getBoundingClientRect();
-            position.x = ((event.clientX - domRect.left) / domRect.width) * 2 - 1;
-            position.y = - ((event.clientY - domRect.top) / domRect.height) * 2 + 1;
-            var s = getNearest(position);
-            if (s) {
-                console.log("Click on " + s.name);
-            }
-        }
-    });
-}
-
-closeButton.addEventListener("click", addListeners);
-
-var raycaster = new THREE.Raycaster();
-
-function getNearest(position) {
-    // Mise à jour de la position du rayon à lancer.
-    raycaster.setFromCamera(position, camera);
-    // Obtenir la liste des intersections
-    var selected = raycaster.intersectObjects(room.getObjectByName("objects").children);
-    if (selected.length) {
-        return selected[0].object;
-    }
-}
-
 
 if (!debug) toggleModal();
